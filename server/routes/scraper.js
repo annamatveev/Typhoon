@@ -72,7 +72,7 @@ router.get('/mapPlaces', asyncMiddleware(async (req, res, next) => {
     for (let j = 0; j < creditCardsJsonContent[i].txns.length; j++) {
       const keyword = creditCardsJsonContent[i].txns[j].description;
       console.log(`Keyword: ${keyword}`);
-      if (placesMappingJsonContent[keyword] === true) {
+      if (placesMappingJsonContent[keyword] === undefined) {
         placesMappingJsonContent[keyword] = false;
         const query = qs.stringify({
           location: googlePlacesConfig.LOCATION,
@@ -96,8 +96,10 @@ router.get('/mapPlaces', asyncMiddleware(async (req, res, next) => {
   fs.writeFile('server/data/companies.json', JSON.stringify(placesMappingJsonContent), (err) => {
     if (err) {
       console.log(err);
+      res.send('Error');
     } else {
       console.log('The file was saved!');
+      res.send('Done');
     }
   });
 }));

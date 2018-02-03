@@ -10,3 +10,4 @@ npm-debug.log
 .idea
 
 server/data/data.json
+server/data/data1.json
