@@ -8,7 +8,7 @@ import {
 const initialState = fromJS({
   loading: false,
   error: false,
-  data: { txns: false, places: false },
+  data: { txns: [], places: [] },
 });
 
 function typhoonProviderReducer(state = initialState, action) {
@@ -17,8 +17,8 @@ function typhoonProviderReducer(state = initialState, action) {
       return state
         .set('loading', true)
         .set('error', false)
-        .setIn(['data', 'places'], false)
-        .setIn(['data', 'txns'], false);
+        .setIn(['data', 'places'], [])
+        .setIn(['data', 'txns'], []);
     case LOAD_DATA_SUCCESS:
       return state
         .setIn(['data', 'places'], action.data.places)

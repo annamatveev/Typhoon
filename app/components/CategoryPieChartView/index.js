@@ -50,62 +50,74 @@ const buildDrilldown = function (chargedAmountBuckets) {
   return txnsDrilldown;
 };
 
-const CompaniesChart = ({ creditCardTransactions, places }) => {
-  const chargedAmountBuckets = bucketifyByCategory(addCategoryToTransactions(creditCardTransactions, places));
-  const chargedAmountPercentageBuckets = [];
-  for (const key in chargedAmountBuckets) {
-    chargedAmountPercentageBuckets.push(
-      {
-        name: key,
-        y: Math.abs(chargedAmountBuckets[key].sum),
-        drilldown: key.toLowerCase(),
-      });
+
+class CategoryPieChartView extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
+  componentDidMount() {
+    this.props.onLoad();
   }
 
-  const config = {
-    chart: {
-      plotBackgroundColor: null,
-      plotBorderWidth: null,
-      plotShadow: false,
-      type: 'pie',
-    },
-    title: {
-      text: 'Amount Spent by Category',
-    },
-    tooltip: {
-      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> (<b>{point.y:.1f} ILS</b>)',
-    },
-    plotOptions: {
-      pie: {
-        allowPointSelect: true,
-        cursor: 'pointer',
-        dataLabels: {
-          useHTML: true,
-          enabled: true,
-          format: '<b>{point.name}</b>: {point.percentage:.1f}%',
-          style: {
-            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
+  render() {
+    const { data } = this.props;
+
+    const mergedTxns = data.get('txns').reduce((accumulator, card) => accumulator.concat(card.txns), []);
+    const chargedAmountBuckets = bucketifyByCategory(addCategoryToTransactions(mergedTxns, data.get('places')));
+    const chargedAmountPercentageBuckets = [];
+    for (const key in chargedAmountBuckets) {
+      chargedAmountPercentageBuckets.push(
+        {
+          name: key,
+          y: Math.abs(chargedAmountBuckets[key].sum),
+          drilldown: key.toLowerCase(),
+        });
+    }
+
+    const config = {
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie',
+      },
+      title: {
+        text: 'Amount Spent by Category',
+      },
+      tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> (<b>{point.y:.1f} ILS</b>)',
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+            useHTML: true,
+            enabled: true,
+            format: '<b>{point.name}</b>: {point.percentage:.1f}%',
+            style: {
+              color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
+            },
           },
         },
       },
-    },
-    series: [{
-      name: 'Spent',
-      colorByPoint: true,
-      data: chargedAmountPercentageBuckets,
-    }],
-    drilldown: {
-      series: buildDrilldown(chargedAmountBuckets),
-    },
-  };
-  return (
-    <ReactHighcharts config={config} />
-  );
-};
+      series: [{
+        name: 'Spent',
+        colorByPoint: true,
+        data: chargedAmountPercentageBuckets,
+      }],
+      drilldown: {
+        series: buildDrilldown(chargedAmountBuckets),
+      },
+    };
+    return (
+      <ReactHighcharts config={config} />
+    );
+  }
+}
 
-CompaniesChart.propTypes = {
+CategoryPieChartView.propTypes = {
   creditCardTransactions: PropTypes.array,
   places: PropTypes.any,
+  onLoad: PropTypes.func.isRequired,
 };
 
-export default CompaniesChart;
+export default CategoryPieChartView;

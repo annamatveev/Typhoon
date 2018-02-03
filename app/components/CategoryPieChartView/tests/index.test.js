@@ -1,9 +1,9 @@
 // import React from 'react';
 // import { shallow } from 'enzyme';
 
-// import CompaniesChart from '../index';
+// import CategoryPieChartView from '../index';
 
-describe('<CompaniesChart />', () => {
+describe('<CategoryPieChartView />', () => {
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(false);
   });

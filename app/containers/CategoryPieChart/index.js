@@ -1,13 +1,9 @@
-import React from 'react';
-
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import CategoryPieChartView from 'components/CategoryPieChartView';
 import { createStructuredSelector } from 'reselect';
-
-import HomePage from 'components/HomePage';
 import { makeSelectData, makeSelectLoading, makeSelectError } from 'containers/TyphoonProvider/selectors';
 import { loadData } from '../TyphoonProvider/actions';
-
 
 export function mapDispatchToProps(dispatch) {
   return {
@@ -21,8 +17,9 @@ const mapStateToProps = createStructuredSelector({
   error: makeSelectError(),
 });
 
+
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(
   withConnect,
-)(HomePage);
+)(CategoryPieChartView);

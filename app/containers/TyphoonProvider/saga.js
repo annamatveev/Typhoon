@@ -1,5 +1,5 @@
 
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { take, spawn, call, put } from 'redux-saga/effects';
 import { LOAD_DATA } from 'containers/TyphoonProvider/constants';
 import { dataLoaded, dataLoadingError } from 'containers/TyphoonProvider/actions';
 
@@ -19,5 +19,6 @@ export function* getCreditCardData() {
 }
 
 export default function* loadData() {
-  yield takeLatest(LOAD_DATA, getCreditCardData);
+  yield take(LOAD_DATA);
+  yield spawn(getCreditCardData);
 }
