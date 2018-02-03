@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 import { Helmet } from 'react-helmet';
-import Info from "../../components/Info";
+import Info from '../../components/Info';
 import PropTypes from 'prop-types';
 import Header from 'components/Header';
 import styled from 'styled-components';
@@ -13,6 +13,7 @@ const HomePageWrapper = styled.div`
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 
   componentDidMount() {
+    console.log(this.props);
     this.props.onLoad();
   }
 
@@ -51,7 +52,7 @@ HomePage.propTypes = {
   data: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.object,
-  ])
+  ]),
 };
 
 

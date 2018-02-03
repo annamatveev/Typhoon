@@ -72,8 +72,8 @@ router.get('/mapPlaces', asyncMiddleware(async (req, res, next) => {
     for (let j = 0; j < creditCardsJsonContent[i].txns.length; j++) {
       const keyword = creditCardsJsonContent[i].txns[j].description;
       console.log(`Keyword: ${keyword}`);
-      if (!placesMappingJsonContent[keyword]) {
-        placesMappingJsonContent[keyword] = true;
+      if (placesMappingJsonContent[keyword] === true) {
+        placesMappingJsonContent[keyword] = false;
         const query = qs.stringify({
           location: googlePlacesConfig.LOCATION,
           radius: googlePlacesConfig.RADIUS,

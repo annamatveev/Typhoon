@@ -70,7 +70,7 @@ const CompaniesChart = ({ creditCardTransactions, places }) => {
       type: 'pie',
     },
     title: {
-      text: 'Amount Spent by Company',
+      text: 'Amount Spent by Category',
     },
     tooltip: {
       pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> (<b>{point.y:.1f} ILS</b>)',
@@ -105,7 +105,7 @@ const CompaniesChart = ({ creditCardTransactions, places }) => {
 
 CompaniesChart.propTypes = {
   creditCardTransactions: PropTypes.array,
-  places: PropTypes.array,
+  places: PropTypes.any,
 };
 
 export default CompaniesChart;

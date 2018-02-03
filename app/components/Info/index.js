@@ -13,11 +13,10 @@ function Info({ loading, error, txns, places }) {
   }
 
   if (txns !== false) {
+    const mergedTxns = txns.reduce((accumulator, card) => accumulator.concat(card.txns), []);
     return (
       <div>
-        {txns.map((card) => (
-          <CreditCard key={card.accountNumber} creditCardTransactions={card.txns} places={places}/>
-        ))}
+        <CreditCard creditCardTransactions={mergedTxns} places={places} />
       </div>
     );
   }

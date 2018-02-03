@@ -1,5 +1,4 @@
 import { fromJS } from 'immutable';
-
 import {
   LOAD_DATA_SUCCESS,
   LOAD_DATA,
@@ -12,7 +11,7 @@ const initialState = fromJS({
   data: { txns: false, places: false },
 });
 
-function appReducer(state = initialState, action) {
+function typhoonProviderReducer(state = initialState, action) {
   switch (action.type) {
     case LOAD_DATA:
       return state
@@ -34,4 +33,6 @@ function appReducer(state = initialState, action) {
   }
 }
 
-export default appReducer;
+
+
+export default typhoonProviderReducer;

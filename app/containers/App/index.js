@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 
 import HomePage from 'containers/HomePage/Loadable';
+import TyphoonProvider from 'containers/TyphoonProvider/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Footer from 'components/Footer';
 
@@ -23,10 +24,12 @@ export default function App() {
       >
         <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="" component={NotFoundPage} />
-      </Switch>
+      <TyphoonProvider>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route path="" component={NotFoundPage} />
+        </Switch>
+      </TyphoonProvider>
       <Footer />
     </AppWrapper>
   );

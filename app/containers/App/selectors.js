@@ -8,20 +8,7 @@ const selectGlobal = (state) => state.get('global');
 
 const selectRoute = (state) => state.get('route');
 
-const makeSelectLoading = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.get('loading')
-);
 
-const makeSelectError = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.get('error')
-);
-
-const makeSelectData = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.get('data')
-);
 
 const makeSelectLocation = () => createSelector(
   selectRoute,
@@ -30,8 +17,5 @@ const makeSelectLocation = () => createSelector(
 
 export {
   selectGlobal,
-  makeSelectLoading,
-  makeSelectError,
-  makeSelectData,
   makeSelectLocation,
 };

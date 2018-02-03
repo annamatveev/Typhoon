@@ -1,7 +1,7 @@
 
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { LOAD_DATA } from 'containers/App/constants';
-import { dataLoaded, dataLoadingError } from 'containers/App/actions';
+import { LOAD_DATA } from 'containers/TyphoonProvider/constants';
+import { dataLoaded, dataLoadingError } from 'containers/TyphoonProvider/actions';
 
 import request from 'utils/request';
 
