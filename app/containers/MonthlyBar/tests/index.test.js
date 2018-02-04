@@ -1,9 +1,9 @@
 // import React from 'react';
 // import { shallow } from 'enzyme';
 
-// import MonthlySpending from '../index';
+// import { MonthlyBar } from '../index';
 
-describe('<MonthlySpending />', () => {
+describe('<MonthlyBar />', () => {
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(false);
   });

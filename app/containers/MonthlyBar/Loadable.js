@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for MonthlySpending
+ * Asynchronously loads the component for MonthlyBar
  *
  */
 

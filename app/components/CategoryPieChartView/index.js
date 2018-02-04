@@ -115,8 +115,7 @@ class CategoryPieChartView extends React.Component { // eslint-disable-line reac
 }
 
 CategoryPieChartView.propTypes = {
-  creditCardTransactions: PropTypes.array,
-  places: PropTypes.any,
+  data: PropTypes.array,
   onLoad: PropTypes.func.isRequired,
 };
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import CategoryPieChart from 'containers/CategoryPieChart';
+import MonthlyBar from 'containers/MonthlyBar';
 import PropTypes from 'prop-types';
 import Header from 'components/Header';
 import styled from 'styled-components';
@@ -19,11 +20,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     return (
       <HomePageWrapper>
         <Helmet>
-          <meta name="description" content="A React.js Boilerplate application homepage" />
+          <meta name="Credit Card Analysis" content="Discover your spendings" />
         </Helmet>
         <Header />
         <Main>
           <CategoryPieChart />
+          <MonthlyBar />
         </Main>
       </HomePageWrapper>
     );

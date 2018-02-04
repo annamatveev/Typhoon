@@ -2,7 +2,7 @@ const bankScraper = require('israeli-bank-scrapers');
 const router = require('express').Router();
 const fs = require('fs');
 
-function buildOptions({company, year, month, day}) {
+function buildOptions({ company, year, month, day }) {
   return {
     companyId: company,
     startDate: new Date(year, month, day),
@@ -11,7 +11,7 @@ function buildOptions({company, year, month, day}) {
   };
 }
 
-function buildCredentials({id, card, num, password, company}) {
+function buildCredentials({ id, card, num, password, company }) {
   const credentials = {
     id,
     password,
