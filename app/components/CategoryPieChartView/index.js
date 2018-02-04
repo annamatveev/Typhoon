@@ -1,20 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import Highcharts from 'highcharts';
 import ReactHighcharts from 'react-highcharts';
 
 import buildConfig from './buildConfig';
 import { normalizeDataForPieChart } from './normalizeDataForPieChart';
-
-import drilldown from 'highcharts-drilldown';
-const drilldownWrapper = (Highcharts) => {
-  if (!window.highchartsDrilldownLoaded) {
-    window.highchartsDrilldownLoaded = true;
-    drilldown(Highcharts);
-  }
-}
-
+import highchartsDrilldownWrapper from '../highchartsDrilldownWrapper';
+highchartsDrilldownWrapper(Highcharts);
 
 class CategoryPieChartView extends React.Component { // eslint-disable-line react/prefer-stateless-function
 

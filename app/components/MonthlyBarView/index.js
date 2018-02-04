@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import Highcharts from 'highcharts';
 import ReactHighcharts from 'react-highcharts';
-import drilldown from 'highcharts-drilldown';
 import transposeDataForBarChart from './normalizeDataForBarChart';
 import buildConfig from './buildConfig';
 
-drilldown(Highcharts);
+import highchartsDrilldownWrapper from '../highchartsDrilldownWrapper';
+highchartsDrilldownWrapper(Highcharts);
 
 class MonthlyBarView extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
