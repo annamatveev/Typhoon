@@ -20,6 +20,21 @@ const makeSelectData = () => createSelector(
   (globalState) => globalState.get('data')
 );
 
+const makeSelectTxns = () => createSelector(
+  makeSelectData(),
+  (data) => data.get('txns')
+);
+
+const makeSelectMergedTxns = () => createSelector(
+  makeSelectTxns(),
+  (txns) => txns.reduce((accumulator, card) => accumulator.concat(card.txns), []),
+);
+
+const makeSelectPlaces = () => createSelector(
+  makeSelectData(),
+  (data) => data.get('places')
+);
+
 const makeSelectTyphoonProvider = () => createSelector(
   selectTyphoonProviderDomain,
   (substate) => substate.toJS()
@@ -31,4 +46,7 @@ export {
   makeSelectLoading,
   makeSelectError,
   makeSelectData,
+  makeSelectTxns,
+  makeSelectMergedTxns,
+  makeSelectPlaces,
 };

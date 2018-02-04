@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import CategoryPieChartView from 'components/CategoryPieChartView';
 import { createStructuredSelector } from 'reselect';
-import { makeSelectData, makeSelectLoading, makeSelectError } from 'containers/TyphoonProvider/selectors';
-import { loadData } from '../TyphoonProvider/actions';
+import { makeSelectTxns, makeSelectMergedTxns, makeSelectPlaces, makeSelectLoading, makeSelectError } from 'containers/TyphoonProvider/selectors';
+import { loadData } from 'containers/TyphoonProvider/actions';
 
 export function mapDispatchToProps(dispatch) {
   return {
@@ -12,7 +12,9 @@ export function mapDispatchToProps(dispatch) {
 }
 
 const mapStateToProps = createStructuredSelector({
-  data: makeSelectData(),
+  txns: makeSelectTxns(),
+  mergedTxns: makeSelectMergedTxns(),
+  places: makeSelectPlaces(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
 });

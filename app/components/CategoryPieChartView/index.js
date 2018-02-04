@@ -14,9 +14,8 @@ class CategoryPieChartView extends React.Component { // eslint-disable-line reac
     this.props.onLoad();
   }
   render() {
-    const { data } = this.props; // TODO: make select for txns and places
-    const txns = data.get('txns').reduce((accumulator, card) => accumulator.concat(card.txns), []); // TODO: merge transactions
-    const config = buildConfig(normalizeDataForPieChart(txns, { map: data.get('places'), to: 'category', from: 'description' }, true));
+    const { mergedTxns, places } = this.props;
+    const config = buildConfig(normalizeDataForPieChart(mergedTxns, { map: places, to: 'category', from: 'description' }, true)); // TODO: Split to labels and normalize
     return (
       <ReactHighcharts config={config} />
     );
@@ -24,7 +23,8 @@ class CategoryPieChartView extends React.Component { // eslint-disable-line reac
 }
 
 CategoryPieChartView.propTypes = {
-  data: PropTypes.object.isRequired,
+  mergedTxns: PropTypes.any.isRequired,
+  places: PropTypes.any.isRequired,
   onLoad: PropTypes.func.isRequired,
 };
 
