@@ -10,9 +10,8 @@ function formatDate(date) {
   const mm = date.getMonth() + 1;
 
   return [date.getFullYear(),
-    '/',
     (mm > 9 ? '' : '0') + mm,
-  ].join('');
+  ].join('/');
 }
 
 const bucketify = (transactions) => transactions.reduce((result, current) => {
@@ -30,6 +29,20 @@ const bucketify = (transactions) => transactions.reduce((result, current) => {
   return { total, buckets: newBuckets };
 }, { total: 0, buckets: {} });
 
+const normalizeDataForChart = function (chargedAmountBuckets) {
+  const chargedAmountPercentageBuckets = [];
+  for (const key in chargedAmountBuckets.buckets) {
+    chargedAmountPercentageBuckets.push(
+      {
+        name: key,
+        date: parseInt(key.split('/').join(''), 10),
+        y: Math.abs(chargedAmountBuckets.buckets[key].sum),
+      });
+  }
+  console.log(chargedAmountPercentageBuckets);
+  return chargedAmountPercentageBuckets.sort((a, b) => a.date - b.date);
+}
+
 class MonthlyBarView extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   componentDidMount() {
@@ -39,16 +52,7 @@ class MonthlyBarView extends React.Component { // eslint-disable-line react/pref
   render() {
     const { data } = this.props;
     const mergedTxns = data.get('txns').reduce((accumulator, card) => accumulator.concat(card.txns), []);
-    const chargedAmountBuckets = bucketify(mergedTxns);
-    const chargedAmountPercentageBuckets = [];
-    for (const key in chargedAmountBuckets.buckets) {
-      chargedAmountPercentageBuckets.push(
-        {
-          name: key,
-          y: Math.abs(chargedAmountBuckets.buckets[key].sum),
-        });
-    }
-
+    const chargedAmountBuckets = normalizeDataForChart(bucketify(mergedTxns));
     const config = {
       chart: {
         plotBackgroundColor: null,
@@ -85,7 +89,7 @@ class MonthlyBarView extends React.Component { // eslint-disable-line react/pref
       series: [{
         name: 'Money Spent',
         colorByPoint: true,
-        data: chargedAmountPercentageBuckets,
+        data: chargedAmountBuckets,
       }],
     };
     return (
@@ -95,7 +99,7 @@ class MonthlyBarView extends React.Component { // eslint-disable-line react/pref
 }
 
 MonthlyBarView.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object.isRequired,
   onLoad: PropTypes.func.isRequired,
 };
 

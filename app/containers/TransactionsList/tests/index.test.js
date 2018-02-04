@@ -1,9 +1,9 @@
 // import React from 'react';
 // import { shallow } from 'enzyme';
 
-// import TransactionsTable from '../index';
+// import { TransactionsList } from '../index';
 
-describe('<TransactionsTable />', () => {
+describe('<TransactionsList />', () => {
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(false);
   });
