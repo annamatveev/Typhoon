@@ -1,7 +1,15 @@
+const aggregators = [
+  {
+    propName: 'chargedAmount',
+    aggregator: (accumulator, current) => (accumulator + current.chargedAmount),
+    initialValue: 0,
+  },
+];
+
 const normalizeDataForPieDrilldown = function (buckets, drilldownBy) {
   const dataDrilldown = [];
   for (const label in buckets) {
-    const drilldownedBuckets = bucketify(buckets[label].originalData, drilldownBy);
+    const drilldownedBuckets = bucketify(buckets[label].originalData, drilldownBy, aggregators);
     const dataBuckets = Object.keys(drilldownedBuckets).map((bk) => [bk, Math.abs(drilldownedBuckets[bk].chargedAmount)]);
     const labelDrilldown = {
       id: label.toLowerCase(),
@@ -12,15 +20,13 @@ const normalizeDataForPieDrilldown = function (buckets, drilldownBy) {
   return dataDrilldown;
 };
 
-const bucketify = (data, bucketifyBy) => data.reduce((result, current) => {
+const bucketify = (data, bucketifyBy, aggregations = []) => data.reduce((result, current) => {
   const buckets = Object.assign({}, result);
   if (!buckets[current[bucketifyBy]]) {
-    buckets[current[bucketifyBy]] = {
-      chargedAmount: 0,
-      originalData: [],
-    };
+    buckets[current[bucketifyBy]] = { originalData: [] };
+    aggregations.forEach(({ propName, initialValue }) => { buckets[current[bucketifyBy]][propName] = initialValue; });
   }
-  buckets[current[bucketifyBy]].chargedAmount += current.chargedAmount;
+  aggregations.forEach(({ propName, aggregator }) => { buckets[current[bucketifyBy]][propName] = aggregator(buckets[current[bucketifyBy]][propName], current); });
   buckets[current[bucketifyBy]].originalData.push(current);
   return buckets;
 }, {});
@@ -35,9 +41,10 @@ const labelData = (data, labels, fromLabel, toLabel) =>
     return labeled;
   });
 
-export const normalizeDataForPieChart = function (data, drilldownMapping) {
+export const normalizeDataForPieChart = function (data, drilldownMapping, drilldown) {
+
   const labeledData = labelData(data, drilldownMapping.map, drilldownMapping.from, drilldownMapping.to);
-  const labelBuckets = bucketify(labeledData, drilldownMapping.to);
+  const labelBuckets = bucketify(labeledData, drilldownMapping.to, aggregators);
   const dataPoints = [];
   for (const label in labelBuckets) {
     const dataPoint = {
@@ -49,7 +56,7 @@ export const normalizeDataForPieChart = function (data, drilldownMapping) {
     }
     dataPoints.push(dataPoint);
   }
-  if (drilldownMapping) {
+  if (drilldown) {
     return {
       data: dataPoints,
       drilldown: normalizeDataForPieDrilldown(labelBuckets, drilldownMapping.from),
