@@ -1,5 +1,5 @@
 const buildConfig = function (data) {
-  const config = {
+  return {
     chart: {
       plotBackgroundColor: null,
       plotBorderWidth: null,
@@ -28,12 +28,10 @@ const buildConfig = function (data) {
       colorByPoint: true,
       data: data.data,
     }],
+    drilldown: {
+      series: data.drilldown,
+    },
   };
-
-  if (data.drilldown) {
-    config.drilldown = { series: data.drilldown };
-  }
-  return config;
 };
 
 export default buildConfig;

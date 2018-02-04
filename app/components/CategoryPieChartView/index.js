@@ -5,7 +5,7 @@ import Highcharts from 'highcharts';
 import ReactHighcharts from 'react-highcharts';
 import drilldown from 'highcharts-drilldown';
 import buildConfig from './buildConfig';
-import { normalizeDataForChart } from './transposeDataForPieChart';
+import { normalizeDataForPieChart } from './normalizeDataForPieChart';
 drilldown(Highcharts);
 
 class CategoryPieChartView extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -13,12 +13,10 @@ class CategoryPieChartView extends React.Component { // eslint-disable-line reac
   componentDidMount() {
     this.props.onLoad();
   }
-  mergeTxns(txns) {
-    return txns.reduce((accumulator, card) => accumulator.concat(card.txns), []);
-  }
   render() {
     const { data } = this.props;
-    const config = buildConfig(normalizeDataForChart(this.mergeTxns(data.get('txns')), data.get('places'), true));
+    const txns = data.get('txns').reduce((accumulator, card) => accumulator.concat(card.txns), []);
+    const config = buildConfig(normalizeDataForPieChart(txns, { map: data.get('places'), to: 'category', from: 'description' }));
     return (
       <ReactHighcharts config={config} />
     );

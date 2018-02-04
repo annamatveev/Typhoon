@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Highcharts from 'highcharts';
 import ReactHighcharts from 'react-highcharts';
 import drilldown from 'highcharts-drilldown';
-import transposeDataForBarChart from './transposeDataForBarChart';
+import transposeDataForBarChart from './normalizeDataForBarChart';
 import buildConfig from './buildConfig';
 
 drilldown(Highcharts);
@@ -14,12 +14,10 @@ class MonthlyBarView extends React.Component { // eslint-disable-line react/pref
   componentDidMount() {
     this.props.onLoad();
   }
-  mergeTxns(txns) {
-    return txns.reduce((accumulator, card) => accumulator.concat(card.txns), []);
-  }
   render() {
     const { data } = this.props;
-    const config = buildConfig(transposeDataForBarChart(this.mergeTxns(data.get('txns')), false));
+    const txns = data.get('txns').reduce((accumulator, card) => accumulator.concat(card.txns), []);
+    const config = buildConfig(transposeDataForBarChart(txns, false));
     return (
       <ReactHighcharts config={config} />
     );

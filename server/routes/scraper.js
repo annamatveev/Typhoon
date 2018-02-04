@@ -6,7 +6,7 @@ function buildOptions({ company, year, month, day }) {
   return {
     companyId: company,
     startDate: new Date(year, month, day),
-    combineInstallments: true, // if set to true, all installment transactions will be combine into the first one
+    combineInstallments: true, // if set to true, all installment txns will be combine into the first one
     verbose: true, // include more debug info about in the output
   };
 }
