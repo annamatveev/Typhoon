@@ -6,7 +6,7 @@ import { dataLoaded, dataLoadingError } from 'containers/TyphoonProvider/actions
 import request from 'utils/request';
 
 export function* getCreditCardData() {
-  const txnsURL = 'http://localhost:3000/api/transactionsMock';
+  const txnsURL = 'http://localhost:3000/api/scraper';
   const placesURL = 'http://localhost:3000/api/places';
 
   try {
