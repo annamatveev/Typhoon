@@ -11,6 +11,11 @@ module.exports = function addProdMiddlewares(app, options) {
   // and other good practices on official Express.js docs http://mxs.is/googmy
   app.use(compression());
   app.use(publicPath, express.static(outputPath));
-
+  app.use(function (req, res, next) {
+    if (!req.secure) {
+      return res.redirect('https://' + req.get('host') + req.url);
+    }
+    next();
+  });
   app.get('*', (req, res) => res.sendFile(path.resolve(outputPath, 'index.html')));
 };
