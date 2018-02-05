@@ -44,7 +44,7 @@ router.get('/map', asyncMiddleware(async (req, res, next) => {
       }
     }
   }
-  fs.writeFile('server/data/companies.json', JSON.stringify(placesMapping), (err) => { res.send(err ? 'Error' : 'Done'); });
+  fs.writeFile(placesConfig.companyToCategoryMapping.MAPPING_FILE, JSON.stringify(placesMapping), (err) => { res.send(err ? 'Error' : 'Done'); });
 }));
 
 module.exports = router;

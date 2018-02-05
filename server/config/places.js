@@ -6,7 +6,7 @@ const googlePlaces = {
 };
 
 const companyToCategoryMapping = {
-  MAPPING_FILE: 'server/data/companies.json',
+  MAPPING_FILE: 'server/data/companies-dummy.json',
 };
 
 module.exports = { googlePlaces, companyToCategoryMapping };
