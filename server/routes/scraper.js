@@ -35,7 +35,7 @@ function buildCredentials({ id, card, num, password, company }) {
 router.get('/', (req, res, next) => {
   const params = req.query;
   if (!params.length) {
-    const contents = fs.readFileSync('server/data/data1.json');
+    const contents = fs.readFileSync('server/data/data-dummy.json');
     const jsonContent = JSON.parse(contents);
     res.send(jsonContent);
   } else {
